@@ -1,0 +1,61 @@
+Зададим функцию и ее производные
+
+```{r}
+F <- function (x){
+  return ((x-5)^2+6*x)
+}
+```
+
+```{r}
+F_dx <- function(x){
+  return (2*x - 4)
+}
+
+F_dxx <- function(x){
+  return (2)
+}
+```
+
+```{r}
+x <- seq(-10, 15, 0.1)
+y <- F(x)
+y_dx <- F_dx(x)
+y_dxx <- F_dxx(x)
+
+# Строим график функции F(x)
+p = plot(x, y, type = "l", col = "blue", main = "График функции и её производных",
+     xlab = "x", ylab = "F(x)", ylim = c(-20, 200))
+
+lines(x, y_dx, col = "green")
+abline(h=F_dxx(x), col = "orange")
+
+# Добавляем легенду для второй производной
+
+legend("topright",
+       legend = c("F(x)",
+                  "F'(x)",
+                  "F''(x)"),
+        col = c("blue",
+                "green",
+                "orange"),
+       lty = 1)
+```
+```{r}
+x = 1
+y_prev = F_dx(x)
+y = 0
+while (abs(y - y_prev) > 1e-6 || abs(F_dx(x)) < 1e-6){
+  x <- x - 0.01 * F_dx(x)
+  y_prev = y
+  y = F(x)
+}
+
+x
+
+x_ <- seq(-10, 15, 0.1)
+y <- F(x_)
+p = plot(x_, y, type = "l", col = "blue", main = "График функции и её производных",
+     xlab = "x", ylab = "F(x)", ylim = c(-20, 200))
+abline(v=x)
+
+```
