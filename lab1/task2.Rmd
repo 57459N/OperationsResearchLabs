@@ -1,0 +1,53 @@
+```{r}
+R = 1
+
+get_lightness <- function(height){
+  angle = atan(R/height)
+  distance = (R^2 + height^2)
+  return (cos(angle)/distance)
+} 
+
+
+get_leghtness_dh <- function(h){
+  dh <- 0.01 * h
+  return ((get_lightness(h + dh) + get_lightness(h))/dh)
+}
+get_leghtness_dh(1)
+```
+
+```{r}
+x <- seq(-2, 10, 0.0001)
+y <- get_lightness(x)
+y_dx <- get_leghtness_dh(x)
+
+plot(x, y, type='l', col='blue')
+abline(h=0)
+plot(x, y_dx, type='l', col='green')
+abline(h=0)
+```
+
+```{r}
+x_prev <- 5.01
+x <- 5
+y_prev <- get_lightness(x_prev) 
+y <- get_lightness(x)
+
+counter <- 0
+while(abs(y - y_prev) > 1e-7){
+  tmp_x <- x
+  x <- x + 0.005 * (y - y_prev) / (x - x_prev)
+  x_prev = tmp_x 
+  y_prev = y
+  y = get_lightness(x)
+  counter <- counter + 1
+}
+
+x
+counter
+
+x_ <- seq(-15, 15, 0.1)
+y <- get_lightness(x_)
+p = plot(x_, y, type = "l", col = "blue", main = "График функции и её производных",
+     xlab = "x", ylab = "F(x)")
+abline(v=x, col="red")
+```

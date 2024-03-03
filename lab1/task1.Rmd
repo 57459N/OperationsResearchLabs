@@ -56,6 +56,6 @@ x_ <- seq(-10, 15, 0.1)
 y <- F(x_)
 p = plot(x_, y, type = "l", col = "blue", main = "График функции и её производных",
      xlab = "x", ylab = "F(x)", ylim = c(-20, 200))
-abline(v=x)
+abline(v=x, col="red")
 
 ```
