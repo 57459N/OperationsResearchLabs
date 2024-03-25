@@ -1,0 +1,25 @@
+```{r}
+library(plotly)
+```
+
+```{r}
+F <- function(x, y){
+  return (3*x^2+x*y+2*y^2-x-4*y)
+}
+
+x <- y <- seq(0, pi/2, length.out = 100)
+z <- outer(x, y, FUN = F)  |> t()
+plot_ly(z = ~z) |> add_surface()
+
+
+x <- y <- seq(0, pi/2, 0.01)
+z <- outer(x, y, FUN = function(x,y) { sin(x*y) })  |> t()
+plot_ly(x=x, y=y, z=z, type="contour")
+```
+
+```{r}
+solution <- optim(c(0,0), function(vector_) F(vector_[1], vector_[2]))
+minimum <- solution$par
+minimum
+cat(F(minimum[1], minimum[2]))
+```
