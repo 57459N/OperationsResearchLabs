@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(plotly)
+```
+
+
+The code chunk appears:
+```{r}
+F <- function (x, y){
+  return (x*y)
+}
+
+D(expression(x*y), 'x')
+D(expression(x*y), 'y')
+
+x <- y <- seq(-1,1, length.out = 1000)
+z = F(x, y)
+infl <- c(FALSE, diff(diff(z)>0)!=0)
+c(x[infl], y[infl])
+ans = optim(c(-1 ,-1), function (vec){F(vec[1], vec[2])})
+ans$par
+
+```
+```{r}
+z <- outer(x, y, FUN = F)  |> t()
+plot_ly(z = ~z) |> add_surface()
+```
+```{r}
+z <- outer(x, y, FUN = F)  |> t()
+plot_ly(x=x, y=y, z=z, type="contour")
+```
